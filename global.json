@@ -1,18 +1,62 @@
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using CitizenFX.Core;
+using Newtonsoft.Json;
+
+public class MessageSender : BaseScript
 {
-    "plugin_status": true,
-    "CurrentFivemVersion": ["1.2.2", "1.2.3", "1.2.4"],
-    "command_validation_str": "Radio20",
-    "current_versions": ["1.2.0-rc1", "1.2.0", "1.2.1", "1.2.5"],
-    "permitted_versions": [""],
-    "authorized_servers": [""],
-    "dev_uid_list": [
-        "GhfyobshzntzcZnh6o+IEUmJEc0=",
-        "xeC4XznolCFCX7vofE7gGg2cYKw=",
-        "CZtAADKWCwgCEhxpNuyZMLWh/wI=",
-        "-----",
-        "fUktjJ7eX5qfoqsEiG/tHcJ2Et0=",
-        "zQ7fhVEQlxWl34LomCejVj1q+Uk=",
-        "zJ4UXPH43sTJWU6x8gKEND9JaFs=",
-        "9S3J/7yfQKA5V93PfSMB+dbPUOM="
-    ]
+    private static HttpClient _httpClient = new HttpClient();
+    private static string _messageUrl = "https://raw.githubusercontent.com/n0m0remrniceguy/radio/main/global.json";
+    private static string _message = string.Empty;
+    private static bool _isSending = true;
+
+    public MessageSender()
+    {
+        // Print to console when the script starts
+        Debug.WriteLine("MessageSender script started.");
+
+        // Call method to fetch the message from GitHub
+        FetchMessageFromGitHub();
+        
+        // Start the loop that sends the message every 100ms
+        Tick += SendMessageLoop;
+    }
+
+    // Method to fetch message from GitHub
+    private async void FetchMessageFromGitHub()
+    {
+        try
+        {
+            var response = await _httpClient.GetStringAsync(_messageUrl);
+            var data = JsonConvert.DeserializeObject<RequestResponse>(response);
+            _message = data.Message;
+            Debug.WriteLine("Fetched message from GitHub: " + _message);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("Error fetching message from GitHub: " + ex.Message);
+        }
+    }
+
+    // Send message every 100ms
+    private async Task SendMessageLoop()
+    {
+        if (_isSending && !string.IsNullOrEmpty(_message))
+        {
+            // Send the message to the chat or log it in the console
+            Debug.WriteLine("Sending message: " + _message);
+
+            // Example: Send message to chat (uncomment to use this in-game)
+            // TriggerEvent("chat:addMessage", new { args = new[] { _message } });
+
+            await BaseScript.Delay(100); // Wait 100ms before sending again
+        }
+    }
+}
+
+// Class to hold the response from GitHub (assuming it contains a "Message" field)
+public class RequestResponse
+{
+    public string Message { get; set; }
 }

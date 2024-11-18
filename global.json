@@ -1,3 +1,4 @@
 {
-  "Message": "Your message here"
+    "Message": "Your dynamic message",
+    "IsSending": true
 }

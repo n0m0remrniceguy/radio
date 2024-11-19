@@ -3,14 +3,14 @@
     "communityName": "changeme",
     "communityAbbreviation": "changeme",
     "zones": [
-        { "zoneid": 1, "zonetag": "LSSD MAIN" },
+        { "zoneid": 1, "zonetag": "z1" },
         { "zoneid": 2, "zonetag": "Z2 FIRE/EMS" },
         { "zoneid": 3, "zonetag": "Z3 MRSA" },
         { "zoneid": 4, "zonetag": "Z4 INTEROP" },
         { "zoneid": 5, "zonetag": "Z5 OTHER" }
     ],
     "talkgroups": [
-        { "znid": 1, "name": "LSSD Dispatch", "tgid": 10281, "conventional": false, "secure": true, "encryptionKey": "1SA01" },
+        { "znid": 1, "name": "CH 1", "tgid": 10281, "conventional": false, "secure": true, "encryptionKey": "1SA01" },
         { "znid": 1, "name": "Patrol Ops", "tgid": 10282, "conventional": false, "secure": true, "encryptionKey": "1PD01" },
         { "znid": 1, "name": "OP 1", "tgid": 10283, "conventional": false, "secure": true, "encryptionKey": "1PD02" },
         { "znid": 1, "name": "OP 2", "tgid": 10284, "conventional": false, "secure": true, "encryptionKey": "1PD02" },
